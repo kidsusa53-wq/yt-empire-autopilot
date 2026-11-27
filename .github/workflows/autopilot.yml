@@ -1,0 +1,65 @@
+name: Autopilot
+
+on:
+  schedule:
+    # Peak USA hours (UTC). 13:00 UTC = 9am ET / 6am PT, 17:00 = 1pm ET,
+    # 21:00 = 5pm ET. Shorts run twice daily; long-form every 2 days.
+    - cron: "0 13 * * *"
+    - cron: "0 17 * * *"
+    - cron: "0 21 * * 1,3,5"
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: "What to run"
+        type: choice
+        required: true
+        default: short
+        options: [short, shorts, long, longform]
+      niche:
+        description: "Niche key from config/niches.json"
+        required: false
+        default: finance
+
+permissions:
+  contents: read
+
+jobs:
+  autopilot:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install FFmpeg
+        run: sudo apt-get update && sudo apt-get install -y ffmpeg
+      - name: Install Python deps
+        run: pip install -r requirements.txt
+      - name: Run autopilot (scheduled)
+        if: github.event_name == 'schedule'
+        env:
+          NICHE: ${{ vars.NICHE || 'finance' }}
+          YOUTUBE_CLIENT_ID: ${{ secrets.YOUTUBE_CLIENT_ID }}
+          YOUTUBE_CLIENT_SECRET: ${{ secrets.YOUTUBE_CLIENT_SECRET }}
+          YOUTUBE_REFRESH_TOKEN: ${{ secrets.YOUTUBE_REFRESH_TOKEN }}
+          CHANNEL_ID: ${{ secrets.CHANNEL_ID }}
+        run: |
+          # 13:00 + 17:00 UTC = Shorts; 21:00 UTC on Mon/Wed/Fri = long-form
+          HOUR=$(date -u +%H)
+          if [ "$HOUR" = "21" ]; then python3 autopilot.py --mode long; else python3 autopilot.py --mode short; fi
+      - name: Run autopilot (manual / Run Now)
+        if: github.event_name == 'workflow_dispatch'
+        env:
+          NICHE: ${{ inputs.niche }}
+          YOUTUBE_CLIENT_ID: ${{ secrets.YOUTUBE_CLIENT_ID }}
+          YOUTUBE_CLIENT_SECRET: ${{ secrets.YOUTUBE_CLIENT_SECRET }}
+          YOUTUBE_REFRESH_TOKEN: ${{ secrets.YOUTUBE_REFRESH_TOKEN }}
+          CHANNEL_ID: ${{ secrets.CHANNEL_ID }}
+        run: python3 autopilot.py --mode ${{ inputs.mode }} --niche ${{ inputs.niche }}
+      - name: Commit updated strategy memory
+        run: |
+          git config user.name "yt-empire-autopilot"
+          git config user.email "autopilot@users.noreply.github.com"
+          git add strategy_memory.json logs/ || true
+          git diff --cached --quiet || git commit -m "autopilot: update strategy memory [skip ci]"
+          git push || true

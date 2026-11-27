@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>YT Empire Autopilot — 1-Click YouTube Automation</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="logo">▶ YT Empire Autopilot</div>
+  <div class="status" id="statusBadge">● Autopilot OFF</div>
+</header>
+<main>
+  <section class="hero">
+    <h1>Your YouTube channel, on autopilot.</h1>
+    <p>Connect a channel, pick a niche, and let the AI brain research, write, voice, render and publish — 2 Shorts a day + long-form every 2 days.</p>
+  </section>
+
+  <section class="cards">
+    <div class="card" id="cardConnect">
+      <span class="step">Step 1</span>
+      <h2>Connect YouTube Channel</h2>
+      <p>One click — Google OAuth 2.0. No keys pasted here; the server handles tokens.</p>
+      <!-- GitHub Pages is static: no /api/auth/google backend exists here.
+           OAuth is done locally (http://localhost:8080/) — see README. -->
+      <button class="btn primary" id="connectBtn" type="button">Connect YouTube Channel</button>
+      <p class="hint" id="connectHint">Not connected yet. OAuth runs locally — this Pages site is the dashboard UI only.</p>
+    </div>
+
+    <div class="card" id="cardCustomize">
+      <span class="step">Step 2</span>
+      <h2>Pick a Niche &amp; Auto-Customize</h2>
+      <label for="nicheSelect">Niche</label>
+      <select id="nicheSelect"></select>
+      <div id="identityPreview" class="preview"></div>
+      <button class="btn primary" id="customizeBtn">Auto-Customize Entire Channel</button>
+      <p class="hint">Applies banner, USA settings, SEO keywords, description, playlists &amp; logo.</p>
+    </div>
+
+    <div class="card" id="cardAutopilot">
+      <span class="step">Step 3</span>
+      <h2>24/7 Self-Learning Autopilot</h2>
+      <label class="toggle"><input type="checkbox" id="autopilotToggle"> <span>Autopilot ON</span></label>
+      <button class="btn" id="runNowBtn">▶ Run Now</button>
+      <p class="hint" id="runStatus">Idle. GitHub Actions runs the schedule in the cloud.</p>
+    </div>
+  </section>
+
+  <section class="cards">
+    <div class="card wide">
+      <h2>AI Brain — Strategy Logs</h2>
+      <p class="hint">Live from <code>strategy_memory.json</code> in the repo.</p>
+      <pre id="brainLogs">Loading strategy_memory.json…</pre>
+      <button class="btn small" id="refreshBrainBtn">Refresh logs</button>
+    </div>
+    <div class="card">
+      <h2>Live Status</h2>
+      <ul id="statusCards">
+        <li>Shorts today: <strong>—</strong></li>
+        <li>Long-form: <strong>—</strong></li>
+        <li>Winning formats: <strong id="winningFormats">—</strong></li>
+        <li>Losing topics: <strong id="losingTopics">—</strong></li>
+      </ul>
+    </div>
+  </section>
+  <p class="footnote">No secrets in this frontend. No Vercel. OAuth + uploads run locally / in GitHub Actions. Live dashboard: https://kulbeer683-sketch.github.io/yt-empire-autopilot/ — see README.md.</p>
+</main>
+<script src="app.js"></script>
+</body>
+</html>

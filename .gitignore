@@ -1,0 +1,13 @@
+.env
+token.json
+client_secret.json
+__pycache__/
+*.pyc
+.venv/
+venv/
+assets/*.mp4
+assets/*.mp3
+assets/*.wav
+output/
+logs/*.log
+.DS_Store
