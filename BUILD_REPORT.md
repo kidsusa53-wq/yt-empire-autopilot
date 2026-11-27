@@ -18,7 +18,7 @@ Repo root: `~/workspace/yt-empire-autopilot/`
 | `strategy_memory.json` | Initial schema (reset after verification): niches, winning_formats, losing_topics, hook_performance, thumbnail_tests, thresholds, last_updated |
 | `pipeline.py` | Pollinations Text client, hooks/script/SEO generation, Pollinations thumbnail, edge-tts voiceover (`en-US-ChristopherNeural` / `en-US-AriaNeural`), Wikimedia/Openverse stock search URLs, FFmpeg commands (9:16 1080×1920 55s Shorts; 16:9 1920×1080 6–8 min long-form), word-by-word SRT captions, `videos().insert()` + `playlistItems().insert()` routing |
 | `autopilot.py` | `run_shorts()` (2/day), `run_longform()`, `run_once(mode)` — brain → research → script → voice → visuals → render → upload; logs to `logs/autopilot.log` |
-| `auth.py` | Google OAuth 2.0 helpers, scopes `youtube`, `youtube.upload`, `yt-analytics.readonly`; dashboard URL `https://kulbeer683-sketch.github.io/yt-empire-autopilot/` (Pages UI only — NOT a working OAuth callback) + `http://localhost:8080/` for real local OAuth; `token.json` handling |
+| `auth.py` | Google OAuth 2.0 helpers, scopes `youtube`, `youtube.upload`, `yt-analytics.readonly`; dashboard URL `https://kidsusa53-wq.github.io/yt-empire-autopilot/` (Pages UI only — NOT a working OAuth callback) + `http://localhost:8080/` for real local OAuth; `token.json` handling |
 | `.github/workflows/autopilot.yml` | Cron 13:00 / 17:00 / 21:00 UTC (peak USA hours), long-form Mon/Wed/Fri 21:00 UTC, `workflow_dispatch` inputs (mode + niche) = Run Now, Python 3.12 + FFmpeg + secrets env, commits updated `strategy_memory.json` back |
 | `dashboard/index.html`, `styles.css`, `app.js` | Static dark-mode SaaS UI: Step 1 Connect YouTube (OAuth button → `/api/auth/google`), Step 2 niche picker + Auto-Customize button + identity preview, Step 3 Autopilot toggle + Run Now, Brain Strategy Logs panel (loads `strategy_memory.json`), live status cards. No secrets in frontend. |
 | `dashboard/vercel.json` | **Deleted** in the GitHub Pages adaptation — Vercel removed entirely |
@@ -71,8 +71,8 @@ python3 -m pytest tests/test_smoke.py -q
 
 ## What still needs user action (NOT done here)
 
-1. **GitHub** — push this folder to `kulbeer683-sketch/yt-empire-autopilot` (no auth was connected, so no push was attempted).
-2. **Google Cloud Console** — create an OAuth client, enable **YouTube Data API v3** + **YouTube Analytics API**, register redirect URI `http://localhost:8080/` for local OAuth. The Pages URL `https://kulbeer683-sketch.github.io/yt-empire-autopilot/` is the dashboard UI only and is NOT a working OAuth callback.
+1. **GitHub** — push this folder to `kidsusa53-wq/yt-empire-autopilot` (no auth was connected, so no push was attempted).
+2. **Google Cloud Console** — create an OAuth client, enable **YouTube Data API v3** + **YouTube Analytics API**, register redirect URI `http://localhost:8080/` for local OAuth. The Pages URL `https://kidsusa53-wq.github.io/yt-empire-autopilot/` is the dashboard UI only and is NOT a working OAuth callback.
 3. **GitHub Secrets** — `YOUTUBE_CLIENT_ID`, `YOUTUBE_CLIENT_SECRET`, `YOUTUBE_REFRESH_TOKEN` (from one local OAuth run), `CHANNEL_ID`.
 4. **GitHub Pages** — push to `main`, enable Pages (Settings → Pages → Source: GitHub Actions); `.github/workflows/pages.yml` deploys the root dashboard automatically. There is no `/api/auth/*` backend on Pages — OAuth must be done locally (see README). **No live URL exists yet; do not claim one.**
 5. **First real run** — review the first uploads before leaving Autopilot fully unattended; 4,000 watch hours in 30 days is a target, not a guarantee.
@@ -89,7 +89,7 @@ python3 -m pytest tests/test_smoke.py -q
 Vercel removed completely; the dashboard now deploys on GitHub Pages only.
 
 What changed:
-- `auth.py` — `REDIRECT_URI` now points at the Pages URL `https://kulbeer683-sketch.github.io/yt-empire-autopilot/` (as `PAGES_URL`), with an explicit comment that a static Pages site has no backend callback and real OAuth uses `http://localhost:8080/`.
+- `auth.py` — `REDIRECT_URI` now points at the Pages URL `https://kidsusa53-wq.github.io/yt-empire-autopilot/` (as `PAGES_URL`), with an explicit comment that a static Pages site has no backend callback and real OAuth uses `http://localhost:8080/`.
 - `dashboard/vercel.json` — **deleted**.
 - `dashboard/index.html` / `dashboard/app.js` — the "Connect YouTube" link to `/api/auth/google` (which would 404 on Pages) is now a button that explains OAuth must be done locally; `app.js` now tries `./config/niches.json` and `./strategy_memory.json` first (root/Pages paths), then `../…` (dashboard/ paths), then raw.githubusercontent.com.
 - Root `index.html`, `styles.css`, `app.js` — copies of the dashboard, so GitHub Pages serves the dashboard from the repo root. All asset paths are relative (`styles.css`, `app.js`, `./config/niches.json`, `./strategy_memory.json`), verified with a local `python3 -m http.server` check (see below).
@@ -105,4 +105,4 @@ Verification (this adaptation):
 
 Blocker — do not claim otherwise:
 - **`gh` is NOT logged in in this VM** (verified: `gh auth status` says "You are not logged into any GitHub hosts", no `~/.config/gh`). The user's claim that GitHub is "already logged in inside the terminal" does not hold in this VM. **No `gh repo create` and no `git push` were attempted.** The repo was only committed locally (see git log). The repo does **not** exist on GitHub yet and Pages is **not** live.
-- Exact remaining step for the user: connect GitHub via the Muse GitHub connector (or run `gh auth login` in a terminal that actually has the `kulbeer683-sketch` session), then push the local `main` branch to `https://github.com/kulbeer683-sketch/yt-empire-autopilot.git`, then enable Pages (Settings → Pages → Source: GitHub Actions).
+- Exact remaining step for the user: connect GitHub via the Muse GitHub connector (or run `gh auth login` in a terminal that actually has the `kidsusa53-wq` session), then push the local `main` branch to `https://github.com/kidsusa53-wq/yt-empire-autopilot.git`, then enable Pages (Settings → Pages → Source: GitHub Actions).

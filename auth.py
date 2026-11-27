@@ -20,7 +20,7 @@ SCOPES = [
 # callback at /api/auth/callback. For a real OAuth run use LOCAL_REDIRECT_URI
 # (http://localhost:8080/) — see README "Google OAuth". PAGES_URL is the
 # dashboard UI address only, not a working OAuth redirect.
-PAGES_URL = "https://kulbeer683-sketch.github.io/yt-empire-autopilot/"
+PAGES_URL = "https://kidsusa53-wq.github.io/yt-empire-autopilot/"
 REDIRECT_URI = PAGES_URL
 LOCAL_REDIRECT_URI = "http://localhost:8080/"
 ROOT = Path(__file__).resolve().parent

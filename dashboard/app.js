@@ -1,5 +1,5 @@
 // YT Empire Autopilot — static dashboard on GitHub Pages (no Vercel, no secrets).
-// Dashboard URL: https://kulbeer683-sketch.github.io/yt-empire-autopilot/
+// Dashboard URL: https://kidsusa53-wq.github.io/yt-empire-autopilot/
 // OAuth cannot complete on a static Pages site (no backend callback).
 // Real OAuth is done locally via http://localhost:8080/ (see README).
 // Customize / Run Now run in GitHub Actions. This file only loads public
@@ -7,12 +7,12 @@
 const NICHE_URLS = [
   "./config/niches.json",
   "../config/niches.json",
-  "https://raw.githubusercontent.com/kulbeer683-sketch/yt-empire-autopilot/main/config/niches.json",
+  "https://raw.githubusercontent.com/kidsusa53-wq/yt-empire-autopilot/main/config/niches.json",
 ];
 const MEMORY_URLS = [
   "./strategy_memory.json",
   "../strategy_memory.json",
-  "https://raw.githubusercontent.com/kulbeer683-sketch/yt-empire-autopilot/main/strategy_memory.json",
+  "https://raw.githubusercontent.com/kidsusa53-wq/yt-empire-autopilot/main/strategy_memory.json",
 ];
 
 async function fetchFirst(urls) {

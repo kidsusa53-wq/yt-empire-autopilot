@@ -98,7 +98,7 @@ Optional variable: `NICHE` (default `finance`).
 **Dashboard (GitHub Pages, UI only):**
 
 ```
-https://kulbeer683-sketch.github.io/yt-empire-autopilot/
+https://kidsusa53-wq.github.io/yt-empire-autopilot/
 ```
 
 > **Important — no working Pages OAuth callback:** GitHub Pages is a static site with no backend, so it cannot receive an OAuth callback at `/api/auth/callback`. Do **not** register the Pages URL as an OAuth redirect expecting it to complete sign-in — it will not work. The Pages URL is for the dashboard UI only.
@@ -118,7 +118,7 @@ Enable in Google Cloud: **YouTube Data API v3** and **YouTube Analytics API**. O
 Live URL (after push + Pages deploy):
 
 ```
-https://kulbeer683-sketch.github.io/yt-empire-autopilot/
+https://kidsusa53-wq.github.io/yt-empire-autopilot/
 ```
 
 - The dashboard is static: `index.html`, `styles.css`, `app.js` at the repo root (source copy in `dashboard/`). All asset paths are relative (`./styles.css`, `./app.js`, `./config/niches.json`, `./strategy_memory.json`) so they work under the `/yt-empire-autopilot/` subpath.
@@ -155,7 +155,7 @@ YouTube OAuth credentials and API access are user-provided via env / GitHub Secr
 
 ## What still needs you
 
-1. Connect GitHub (`kulbeer683-sketch`) and push this repo — not done here (no auth connected in this VM; see BUILD_REPORT).
+1. Connect GitHub (`kidsusa53-wq`) and push this repo — not done here (no auth connected in this VM; see BUILD_REPORT).
 2. Enable GitHub Pages: Settings → Pages → Source: GitHub Actions. The `pages.yml` workflow deploys on push to `main`.
 3. Create a Google Cloud OAuth client, enable YouTube Data API v3 + Analytics API, register `http://localhost:8080/` as the redirect URI (see "Google OAuth" — the Pages URL is UI-only, not a callback).
 4. Run local OAuth once to obtain `YOUTUBE_REFRESH_TOKEN`, add the 4 GitHub Secrets above.

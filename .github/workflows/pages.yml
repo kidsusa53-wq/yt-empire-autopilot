@@ -2,7 +2,7 @@ name: Deploy GitHub Pages
 
 # No Vercel. The static dashboard (index.html / styles.css / app.js at the
 # repo root) is deployed to:
-#   https://kulbeer683-sketch.github.io/yt-empire-autopilot/
+#   https://kidsusa53-wq.github.io/yt-empire-autopilot/
 # Enable once in the repo: Settings > Pages > Build and deployment >
 # Source: GitHub Actions.
 
